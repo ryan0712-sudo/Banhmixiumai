@@ -3,13 +3,13 @@
 ## Product brief
 - Product: street-food breakfast shop "Bánh Mì Xíu Mại A8", 958 Nguyễn Văn Quá, P. Đông Hưng Thuận, TP.HCM.
 - Hero: bowl of xíu mại (pork meatballs) in tomato sauce with fried egg, chả lụa, tofu, herbs; served with a crusty bánh mì,
-  đồ chua (pickles) and cà phê sữa đá. Source: ONE user photo (1254², AI-upscaled 4× with Real-ESRGAN for close framings).
+  đồ chua (pickles) and cà phê sữa đá. Source: ONE user photo (1254², AI-upscaled 4× with Real-ESRGAN, stored as a 3× (3762px) asset for close framings).
 - Audience: local customers on TikTok/Reels. Goal: appetite + remember the name + know the address.
 
 ## Requirement → execution decisions
 | Requirement | Decision |
 |---|---|
-| 9:16 vertical | 1080×1920 @30fps, 681f (22.7s) |
+| 9:16 vertical | 1080×1920 @30fps, 682f (22.7s) |
 | Background music | house-vibez.mp3 (Mixkit, free licence), 122.00 BPM grid (t0 0.064s, match 98.5%, mean 4.7ms); all cuts on beats; music lift at beat 32 = outro |
 | Shop name + address | Outro lockup: A8 badge + 2-line wordmark + address as tagline (≥46px) |
 | Only one photo | Every shot frames the same photo differently; no invented food or claims (no prices/hours) |
@@ -35,12 +35,15 @@ Styleframe skipped: the photo itself is the brand reference; colours/type valida
 | # | Frames | Shot | Key motion | Copy |
 |---|---|---|---|---|
 | 1 | 0–150 | text-as-mask | cream stage, "XÍU / MẠI" letters reveal the photo drifting inside; breath; rush 46× → full photo on beat 8 (f121); hold | eyebrow "BÁNH MÌ", sub "Sốt cà chua đậm đà · nóng hổi" |
-| 2 | 150–298 | comic-panel-split | full photo → 3 slanted seams cut on beats 12/12.5/13: whole bowl / xíu mại close / yolk macro; caption boxes stamp; panel 3 eats screen on beat 16 → poster | "01 · Cả tô / Đầy đặn", "02 · Xíu mại / Mềm, mọng", "03 · Trứng / Lòng đào"; poster "Xíu mại / mềm thơm." + "Sốt cà chua đậm đà, trứng ốp la lòng đào." |
-| 3 | 298–475 | sheen-sweep | bánh mì card rises (no-bounce spring), turns to the light while one highlight band sweeps (beats 24→26); CTA pill | "ĂN KÈM", "Bánh mì / nóng giòn.", "Chấm sốt xíu mại, giòn rụm.", pill "Đồ chua · Cà phê sữa đá" |
-| 4 | 475–681 | logo lockup | glowing split ring collapses 5.4→1 and lands as A8 badge on beat 34 with one shockwave; badge rises, wordmark letters slide in; address fades in; ~3s hold; music fades | "Bánh Mì / Xíu Mại", "958 Nguyễn Văn Quá", "P. Đông Hưng Thuận, TP.HCM" |
+| 2 | 150–328 | comic-panel-split | full photo → 3 slanted seams cut on beats 12/12.5/13: whole bowl / xíu mại close / yolk macro; caption boxes stamp; panel 3 eats screen on beat 16 → poster | "01 · Cả tô / Đầy đặn", "02 · Xíu mại / Mềm, mọng nước", "03 · Trứng / Lòng đào"; poster (chả lụa/đậu hũ framing) "Xíu mại / mềm thơm." + "Thêm chả lụa, đậu hũ, / rau thơm." — ≥40f full hold |
+| 3 | 328–475 | sheen-sweep | bánh mì card (graded −25% so the band reads) rises, turns to the light while one highlight band sweeps (beats 25→27); CTA pill | "ĂN KÈM", "Bánh mì / nóng giòn.", "Chấm sốt xíu mại là hết sẩy.", pill "Bữa sáng đậm vị Sài Gòn" |
+| 4 | 475–682 | logo lockup | glowing split ring collapses 5.4→1 and lands as A8 badge on beat 34 with one shockwave; badge rises, wordmark letters slide in; address fades in; ~3s hold; music fades | "Bánh Mì / Xíu Mại", "958 Nguyễn Văn Quá", "P. Đông Hưng Thuận, TP.HCM" |
 
 Full-frame/camera-level hits: rush takeover (beat 8), eat-screen (beat 16), badge landing (beat 34) = 3 (R4 limit ≤3, spaced ≥8… note: beats 8→16 is 8 beats apart; documented deviation from the ≥16-beat spacing because the film is only 46 beats long).
 
 ## SFX table (src/sfx.ts)
 rush whoosh → beat 8 · 3 shutter clicks on the cuts (alternating, stepping down) · eat-screen whoosh · card-rise soft whoosh ·
 riser → impact on beat 34 · shimmer on the address. Output audio offset measured 42.3ms (1.27f), applied via OUTPUT_AUDIO_OFFSET_SEC.
+
+## Independent review (stage 7)
+A clean-context reviewer found 6 must-fix issues (poster hold, caption cut by seam, invisible sheen, frame-0 accent, poster gradient pop, masked SFX) plus copy repeats / safe zones / loudness. All fixed and re-rendered; final mix −15.9 LUFS, peak −0.6 dBFS. Cuts measured within ≤1f of music onsets.

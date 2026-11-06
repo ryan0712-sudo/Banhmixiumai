@@ -27,7 +27,7 @@ def env(n,att,rel,shape=2.0):
 n=int(0.8*SR); x=pink(n); y=sweep_bp(x,300,3200,1.0)
 t=np.arange(n)/SR; e=np.exp(-((t-0.55)/0.16)**2); save('whoosh.wav',y*e,0.6)
 # soft whoosh (longer, lower) for card rise / eat-screen
-n=int(1.0*SR); y=sweep_bp(pink(n),200,1800,0.9); t=np.arange(n)/SR; save('whoosh-soft.wav',y*np.exp(-((t-0.45)/0.22)**2),0.5)
+n=int(1.0*SR); y=sweep_bp(pink(n),200,1800,0.9); t=np.arange(n)/SR; save('whoosh-soft.wav',y*np.exp(-((t-0.45)/0.22)**2),0.85)
 # shutter: two short mechanical clicks (curtain open/close) with body resonance, A/B variants
 def shutter(seed,gap):
     r=np.random.default_rng(seed); n=int(0.18*SR); y=np.zeros(n)
@@ -40,7 +40,7 @@ def shutter(seed,gap):
     return y
 save('shutter-a.wav',shutter(11,0.055),0.7); save('shutter-b.wav',shutter(23,0.048),0.7)
 # riser: 1.1s noise rising to the landing point (ends at file end)
-n=int(1.1*SR); y=sweep_bp(pink(n),400,6000,1.4); t=np.arange(n)/SR; e=(t/t[-1])**3; e[-int(0.01*SR):]*=np.linspace(1,0,int(0.01*SR)); save('riser.wav',y*e,0.5)
+n=int(1.1*SR); y=sweep_bp(pink(n),400,6000,1.4); t=np.arange(n)/SR; e=(t/t[-1])**3; e[-int(0.01*SR):]*=np.linspace(1,0,int(0.01*SR)); save('riser.wav',y*e,0.85)
 # impact: low thump (pitch-drop sine) + short noise crack + tail; peak at file start
 n=int(1.6*SR); t=np.arange(n)/SR
 f=48+70*np.exp(-t/0.05); ph=2*np.pi*np.cumsum(f)/SR; thump=np.sin(ph)*np.exp(-t/0.28)
@@ -51,5 +51,5 @@ save('impact.wav',thump+crack+tail,0.8)
 n=int(1.8*SR); t=np.arange(n)/SR; y=np.zeros(n)
 for i,fr in enumerate([1568,2093,2637,3136,3951]):
     d=0.06*i; m=t>=d; y[m]+=np.sin(2*np.pi*fr*(t[m]-d))*np.exp(-(t[m]-d)/0.6)*np.clip((t[m]-d)/0.01,0,1)*(0.6**i*0.6+0.4)
-save('shimmer.wav',y,0.35)
+save('shimmer.wav',y,0.8)
 print('ok')

@@ -13,10 +13,10 @@ import { localBeat } from '../timeline';
 
 export const S2_DEFAULTS = {
   cap1: ['01 · Cả tô', 'Đầy đặn'],
-  cap2: ['02 · Xíu mại', 'Mềm, mọng'],
+  cap2: ['02 · Xíu mại', 'Mềm, mọng nước'],
   cap3: ['03 · Trứng', 'Lòng đào'],
   title: 'Xíu mại\nmềm thơm.',
-  sub: 'Sốt cà chua đậm đà, trứng ốp la lòng đào.',
+  sub: 'Thêm chả lụa, đậu hũ,\nrau thơm.',
 };
 
 const W = 1080, H = 1920;
@@ -41,7 +41,7 @@ const HALF = 9;
 const CAM1: Cam = { fx: 575, fy: 830, cx: 540, cy: 330, s: 0.98 }; // ① whole bowl
 const CAM2: Cam = { fx: 520, fy: 690, cx: 560, cy: 960, s: 2.2 }; // ② xíu mại close
 const CAM3: Cam = { fx: 470, fy: 965, cx: 540, cy: 1640, s: 2.9 }; // ③ yolk macro
-const CAM_END: Cam = { fx: 520, fy: 860, cx: 540, cy: 1250, s: 2.15 }; // poster: balls + egg + chả
+const CAM_END: Cam = { fx: 760, fy: 860, cx: 540, cy: 1300, s: 2.2 }; // poster: chả lụa + đậu hũ + herbs (new information)
 
 const expandAt = (f: number) => {
   if (f < EXP0) return 0;
@@ -97,11 +97,11 @@ const SpeedLines: React.FC<{ f: number; at: number; cx: number; cy: number }> = 
 const Headline: React.FC<{ f: number; title: string; sub: string }> = ({ f, title, sub }) => (
   <div style={{ position: 'absolute', left: 90, right: 90, top: 210, color: C.cream }}>
     <div style={{ fontFamily: SERIF, fontSize: 160, fontWeight: 800, lineHeight: 1.12, letterSpacing: '-0.02em' }}>
-      <TextReveal text={title} by="line" variant="rise" start={TITLE} each={20} gap={6}
+      <TextReveal text={title} by="line" variant="rise" start={TITLE} each={16} gap={5}
         unitStyle={(i) => (i === 1 ? { color: C.crust, fontStyle: 'italic' } : {})} />
     </div>
-    <div style={{ fontFamily: SANS, fontSize: 50, fontWeight: 500, color: C.cream2, marginTop: 40, lineHeight: 1.3 }}>
-      <TextReveal text={sub} by="word" variant="blur" start={TITLE + 14} each={14} gap={2} style={{ whiteSpace: 'normal' }} />
+    <div style={{ fontFamily: SANS, fontSize: 58, fontWeight: 600, color: C.cream, marginTop: 40, lineHeight: 1.3, textShadow: '0 2px 18px rgba(0,0,0,0.6)' }}>
+      <TextReveal text={sub} by="line" variant="blur" start={TITLE + 8} each={14} style={{ whiteSpace: 'normal' }} />
     </div>
   </div>
 );
@@ -115,7 +115,7 @@ export const S2Panels: React.FC<Partial<typeof S2_DEFAULTS>> = (p) => {
     return (
       <AbsoluteFill style={{ background: C.ink, overflow: 'hidden' }}>
         <Photo cam={cam3At(f)} />
-        <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, ${alpha(C.ink, 0.92)} 0%, ${alpha(C.ink, 0.7)} 30%, ${alpha(C.ink, 0)} 52%)` }} />
+        <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, ${alpha(C.ink, 0.92)} 0%, ${alpha(C.ink, 0.75)} 34%, ${alpha(C.ink, 0)} 58%)` }} />
         <Headline f={f} title={d.title} sub={d.sub} />
         <Vignette strength={0.45} inner={0.5} color="#0c0604" />
         <Grain opacity={0.06} blend="soft-light" />
@@ -128,8 +128,8 @@ export const S2Panels: React.FC<Partial<typeof S2_DEFAULTS>> = (p) => {
     const push = ramp(f, 0, SPLIT, EASE.linear);
     return (
       <AbsoluteFill style={{ background: C.ink, overflow: 'hidden' }}>
-        <Photo cam={{ ...CAM_FULL, s: CAM_FULL.s * (1.012 + 0.025 * push) }} />
-        <Vignette strength={0.35} inner={0.5} color="#0c0604" />
+        <Photo cam={{ ...CAM_FULL, s: CAM_FULL.s * (1.005 + 0.03 * push) }} />
+        <Vignette strength={0.35 * ramp(f, 0, 20, EASE.smooth)} inner={0.5} color="#0c0604" />
       </AbsoluteFill>
     );
   }
@@ -167,7 +167,7 @@ export const S2Panels: React.FC<Partial<typeof S2_DEFAULTS>> = (p) => {
     <AbsoluteFill style={{ background: C.ink, overflow: 'hidden' }}>
       {f < CUTS[2] + 2 && (
         <div style={{ position: 'absolute', inset: 0 }}>
-          <Photo cam={{ ...CAM_FULL, s: CAM_FULL.s * 1.037 }} />
+          <Photo cam={{ ...CAM_FULL, s: CAM_FULL.s * 1.035 }} />
           <div style={{ position: 'absolute', inset: 0, background: C.ink, opacity: 0.72 }} />
         </div>
       )}
@@ -185,9 +185,9 @@ export const S2Panels: React.FC<Partial<typeof S2_DEFAULTS>> = (p) => {
             {i === 2 && <SpeedLines f={f} at={CUTS[2]} cx={540} cy={CAM3.cy} />}
             {flash > 0.01 && <div style={{ position: 'absolute', inset: 0, background: C.cream, opacity: 0.55 * flash }} />}
             {i === 0 && <Caption f={f} at={CUTS[0] + CAP} x={70} y={80} kicker={d.cap1[0]} text={d.cap1[1]} tilt={-2} />}
-            {i === 1 && <Caption f={f} at={CUTS[1] + CAP} x={70} y={1050} kicker={d.cap2[0]} text={d.cap2[1]} tilt={1.5} anchor="right" />}
+            {i === 1 && <Caption f={f} at={CUTS[1] + CAP} x={70} y={1060} kicker={d.cap2[0]} text={d.cap2[1]} tilt={1.5} />}
             {i === 2 && <div style={{ position: 'absolute', inset: 0, opacity: capOut }}>
-              <Caption f={f} at={CUTS[2] + CAP} x={70} y={1640} kicker={d.cap3[0]} text={d.cap3[1]} tilt={-1.5} />
+              <Caption f={f} at={CUTS[2] + CAP} x={70} y={1450} kicker={d.cap3[0]} text={d.cap3[1]} tilt={-1.5} />
             </div>}
           </div>
         );
@@ -204,6 +204,8 @@ export const S2Panels: React.FC<Partial<typeof S2_DEFAULTS>> = (p) => {
           </svg>
         </SpeedBlur>
       </div>
+      {/* poster gradient fades in during the eat-screen sweep so the poster branch has no exposure pop */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 6, pointerEvents: 'none', opacity: Math.max(0, expandAt(f)), background: `linear-gradient(180deg, ${alpha(C.ink, 0.92)} 0%, ${alpha(C.ink, 0.75)} 34%, ${alpha(C.ink, 0)} 58%)` }} />
       <Vignette strength={0.45} inner={0.5} color="#0c0604" style={{ zIndex: 7 }} />
       <Grain opacity={0.06} blend="soft-light" style={{ zIndex: 8 }} />
     </AbsoluteFill>

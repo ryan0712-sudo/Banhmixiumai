@@ -36,7 +36,7 @@ const MAX_S = 46;
 // Beat-anchored timing (local frames; shot starts at 0)
 const IN_END = 18;
 const DRIFT0 = 18;
-const RUSH1 = beatF(8); // takeover completes on beat 8 (kick)
+const RUSH1 = beatF(8) + 4; // screen is fully covered ~4f before the rush ends → coverage lands on beat 8
 const RUSH0 = RUSH1 - 24;
 const BREATH0 = RUSH0 - 8;
 const DRIFT1 = BREATH0;
@@ -49,7 +49,7 @@ export const S1Mask: React.FC<Partial<typeof S1_DEFAULTS>> = (p) => {
   const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
 
   const intro = ramp(f, 0, IN_END, EASE.snappy);
-  const wipe = ramp(f, 0, 16, EASE.out);
+  const wipe = ramp(f, 0, 22, EASE.swift);
   const introS = 1.04 - 0.04 * intro;
 
   const breath = ramp(f, BREATH0, RUSH0 - BREATH0, EASE.swift);
@@ -80,7 +80,7 @@ export const S1Mask: React.FC<Partial<typeof S1_DEFAULTS>> = (p) => {
       <Photo cam={cam} />
     </div>
   );
-  const clipBottom = `inset(0 0 ${((1 - wipe) * (H - LINE1_Y + FS * 0.9)).toFixed(1)}px 0)`;
+  const clipBottom = `inset(0 0 ${((1 - wipe) * (H - LINE1_Y + FS * 1.3)).toFixed(1)}px 0)`;
 
   return (
     <AbsoluteFill style={{ background: C.cream, overflow: 'hidden' }}>

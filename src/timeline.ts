@@ -12,8 +12,8 @@ export const beatF = (n: number) => Math.round(beatT(n) * FPS);
 
 export const SHOTS = {
   s1_mask: { from: 0, to: beatF(10) }, // "XÍU MẠI" text-as-mask → photo takeover lands on beat 8
-  s2_panels: { from: beatF(10), to: beatF(20) }, // comic-panel-split: cuts on beats 12 / 12.5 / 13, eat-screen on beat 16
-  s3_banhmi: { from: beatF(20), to: beatF(32) }, // sheen-sweep bánh mì card, sweep on beats 24→26
+  s2_panels: { from: beatF(10), to: beatF(22) }, // comic-panel-split: cuts on beats 12 / 12.5 / 13, eat-screen on beat 16
+  s3_banhmi: { from: beatF(22), to: beatF(32) }, // sheen-sweep bánh mì card, sweep on beats 25→27
   s4_lockup: { from: beatF(32), to: beatF(46) }, // logo lockup, music lifts on beat 32, ring lands on beat 34
 } as const;
 

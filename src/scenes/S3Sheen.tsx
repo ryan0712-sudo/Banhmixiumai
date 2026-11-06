@@ -8,29 +8,29 @@ import { AbsoluteFill, Img, staticFile, useCurrentFrame } from 'remotion';
 import { EASE, Grain, Vignette, mix, ramp } from '../fx/Polish';
 import { TextReveal, alpha, springAt } from '../fx/Look';
 import { C, SANS, SERIF } from '../brand';
-import { localBeat } from '../timeline';
+import { dur, localBeat } from '../timeline';
 
 export const S3_DEFAULTS = {
   eyebrow: 'ĂN KÈM',
   title: 'Bánh mì\nnóng giòn.',
-  body: 'Chấm sốt xíu mại, giòn rụm.',
-  cta: 'Đồ chua · Cà phê sữa đá',
+  body: 'Chấm sốt xíu mại là hết sẩy.',
+  cta: 'Bữa sáng đậm vị Sài Gòn',
 };
 
 const W = 960;
 const H = 501; // card crop of the loaf (source 20..740 × 165..541, aspect 1.915)
 const R = 40;
 const CX = 540;
-const CY = 1080;
+const CY = 1000;
 
-const SWEEP_START = localBeat('s3_banhmi', 24);
-const SWEEP_END = localBeat('s3_banhmi', 26);
+const SWEEP_START = localBeat('s3_banhmi', 25);
+const SWEEP_END = localBeat('s3_banhmi', 27);
 const TURN_END = SWEEP_END + 6;
 
 export const S3Sheen: React.FC<Partial<typeof S3_DEFAULTS>> = (p) => {
   const d = { ...S3_DEFAULTS, ...p };
   const frame = useCurrentFrame();
-  const total = 177;
+  const total = dur('s3_banhmi');
 
   const enter = springAt(frame, 0, { damping: 24, stiffness: 70, mass: 1.1 });
   const shadowIn = springAt(frame, 4, { damping: 24, stiffness: 70, mass: 1.1 });
@@ -80,12 +80,12 @@ export const S3Sheen: React.FC<Partial<typeof S3_DEFAULTS>> = (p) => {
             boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.10), inset 0 1.5px 0 rgba(255,255,255,0.25)',
           }}>
             <Img src={staticFile('img/banhmi.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 80% 90% at 15% 0%, rgba(255,240,215,0.10) 0%, rgba(255,240,215,0) 60%), linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.18) 100%)' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 80% 90% at 15% 0%, rgba(255,240,215,0.10) 0%, rgba(255,240,215,0) 60%), linear-gradient(180deg, rgba(20,10,5,0.22) 0%, rgba(20,10,5,0.3) 100%)' }} />
             {sweepOn && (
               <>
                 <div style={{
                   position: 'absolute', top: 0, left: bandX, width: 2 * W, height: H, mixBlendMode: 'screen', pointerEvents: 'none',
-                  background: 'linear-gradient(115deg, transparent 36%, rgba(255,240,215,0.06) 43%, rgba(255,240,215,0.14) 47.5%, rgba(255,246,232,0.5) 50%, rgba(255,240,215,0.14) 52.5%, rgba(255,240,215,0.06) 57%, transparent 64%)',
+                  background: 'linear-gradient(115deg, transparent 36%, rgba(255,240,215,0.06) 43%, rgba(255,240,215,0.22) 47.5%, rgba(255,248,236,0.85) 50%, rgba(255,240,215,0.14) 52.5%, rgba(255,240,215,0.06) 57%, transparent 64%)',
                 }} />
                 <div style={{
                   position: 'absolute', left: 0, top: 0, right: 0, height: 2,
@@ -113,11 +113,11 @@ export const S3Sheen: React.FC<Partial<typeof S3_DEFAULTS>> = (p) => {
         </div>
       </div>
       <div style={{
-        position: 'absolute', left: 90, right: 90, top: CY + H / 2 + 120, fontSize: 50, fontWeight: 500, lineHeight: 1.32, color: C.cream2,
+        position: 'absolute', left: 90, right: 90, top: CY + H / 2 + 120, fontSize: 58, fontWeight: 500, lineHeight: 1.32, color: C.cream2,
         opacity: ramp(frame, 30, 18, EASE.out), transform: `translateY(${mix(14, 0, ramp(frame, 30, 22, EASE.snappy)).toFixed(1)}px)`,
       }}>{d.body}</div>
       <div style={{
-        position: 'absolute', left: 90, top: CY + H / 2 + 300, display: 'inline-flex', alignItems: 'center', gap: 16, padding: '22px 36px', borderRadius: 999,
+        position: 'absolute', left: 90, top: CY + H / 2 + 250, display: 'inline-flex', alignItems: 'center', gap: 16, padding: '22px 36px', borderRadius: 999,
         background: C.cream, color: C.ink, fontSize: 44, fontWeight: 700,
         boxShadow: `0 14px 30px -12px ${alpha('#000000', 0.6)}`, opacity: cta, transform: `translateY(${mix(26, 0, cta).toFixed(1)}px)`,
       }}>

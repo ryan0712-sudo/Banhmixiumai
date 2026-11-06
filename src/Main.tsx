@@ -15,7 +15,7 @@ export const SCENES = [
   { key: 's4_lockup', Comp: S4Lockup },
 ] as const;
 
-export const BGM_VOLUME = 0.5;
+export const BGM_VOLUME = 0.62;
 
 export const Main: React.FC<{ bgm?: boolean }> = ({ bgm = true }) => {
   useFonts();
